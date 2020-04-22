@@ -1,0 +1,7 @@
+button{
+    padding-right: 10px;
+}
+
+input[type="date"]:focus::before {
+    content: attr(placeholder);
+ }

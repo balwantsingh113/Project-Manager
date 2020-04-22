@@ -1,0 +1,78 @@
+<div class="col-sm-12">
+<div class="form-group row">
+        <label for="projectName" class="col-sm-1 col-form-label">Project: </label>
+        <div class="col-sm-3">
+            <input type="text" placeholder="Search Project" class="form-control" id="projectName" name="projectName" [(ngModel)]="projectName"/>
+        </div>
+        <div class="col-sm-1">
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#projectModal">Search</button>
+                <!-- Modal -->
+                  <div id="projectModal" class="modal fade" role="dialog" tabindex="-1">
+                    <div class="modal-dialog">
+  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Projects</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <input type="text" placeholder="Search" class="form-control" id="projectSearch" name="projectSearch" [(ngModel)]="projectSearch"/>
+                                <br/>
+                                <ul class="list-group" *ngFor="let project of projectItems | projectfilter: { projectName: projectSearch}">
+                                    <button type="button" class="list-group-item" data-dismiss="modal" (click)="setproject(project)">{{project.projectName}}</button>
+                                </ul>
+                            </div>
+                          </div>
+                    
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+     </div>
+        <div class="col-sm-1">
+                <label class="col-form-label">Sort Task By:</label>
+            </div>
+            <div class="col-sm-1">
+                <button type = "reset" class="btn btn-light">Start Date</button>
+            </div>
+            <div class="col-sm-1">
+                <button type = "reset" class="btn btn-light">End Date</button>
+            </div>
+            <div class="col-sm-1">
+                <button type = "reset" class="btn btn-light">Priority</button>
+            </div>
+            <div class="col-sm-1">
+                <button type = "reset" class="btn btn-light">Completed</button>
+            </div>
+    </div>
+
+    <div class="row">
+
+    </div>
+    <hr/>
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Parent</th>
+        <th>Priority</th>
+        <th>Start</th>
+        <th>End</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor = "let task of taskItems | taskfilter:{ taskName: taskName, parentTask: parentTask, startDate: startDate, endDate: endDate }">
+        <td style="background-color:#eee;">{{task.taskName}}</td>
+        <td style="background-color:#eee;">{{task.parentTask}}</td>
+        <td>{{task.priority}}</td>
+        <td>{{task.startDate}}</td>
+        <td>{{task.endDate}}</td>
+        <td *ngIf="!task.status"><button><a [routerLink]="['/app-update-task', task.taskId]">Edit</a></button></td>
+        <td *ngIf="!task.status"><button (click)="updateEndStatus(task)">End Task</button></td>
+    </tr>
+</table>
+</div>

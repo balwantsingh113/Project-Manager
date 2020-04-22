@@ -1,0 +1,31 @@
+th{
+    font-weight: bold;
+    padding: 10px;
+    border-spacing: 10px;
+    font-size: 20px;
+}
+
+table {
+    align-self: center;
+    width:100%;
+    border-collapse:separate;
+    border-spacing: 10px;
+    text-align: center;
+}
+
+td{
+    padding: 5px;
+    border-spacing: 5px;
+}
+
+a{
+    text-decoration: none;
+}
+
+input {
+        background-color:#eee;
+}
+
+.modal.show{
+    display: block;
+}

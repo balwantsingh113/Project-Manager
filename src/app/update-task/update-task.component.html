@@ -1,0 +1,167 @@
+
+<div class="col-sm-10">
+    <form class="form-horizontal" name="form" (ngSubmit)="taskForm.form.valid && taskForm.reset()" #taskForm="ngForm" novalidate> 
+    <div class="form-group row">
+      <label for="projectName" class="col-sm-2 col-form-label">Project: </label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="projectName" [(ngModel)]="task.projectName" [disabled]="true" #projectName="ngModel" [ngClass]="{ 'is-invalid': taskForm.submitted && projectName.invalid }" required />
+              <div *ngIf="taskForm.submitted && projectName.invalid" class="invalid-feedback">
+                  <div class="text-danger" *ngIf="projectName.errors.required">Project Name is required</div>
+              </div>
+      </div>
+      <div class="col-sm-2">
+          <button type="button" class="btn btn-light" data-toggle="modal" data-target="#projectModal">Search</button>
+          <!-- Modal -->
+            <div id="projectModal" class="modal fade" role="dialog" tabindex="-1">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Projects</h4>
+                  </div>
+                  <div class="modal-body">
+                      <div>
+                          <input type="text" placeholder="Search" class="form-control" id="projectSearch" name="projectSearch" [(ngModel)]="projectSearch"/>
+                          <br/>
+                          <ul class="list-group" *ngFor="let project of projectItems | projectfilter: { projectName: projectSearch}">
+                              <button type="button" class="list-group-item" data-dismiss="modal" (click)="setProject(project)">{{project.projectName}}</button>
+                          </ul>
+                      </div>
+                    </div>
+              
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        
+        </div>
+
+  </div>
+    <div class="form-group row">
+        <label for="taskName" class="col-sm-2 col-form-label">Task:</label>
+        <div class="col-sm-6">
+          
+          <input type="text" class="form-control" name="taskName" [(ngModel)]="task.taskName" #taskName="ngModel" [ngClass]="{ 'is-invalid': taskForm.submitted && taskName.invalid }" required />
+              <div *ngIf="taskForm.submitted && taskName.invalid" class="invalid-feedback">
+                  <div class="text-danger" *ngIf="taskName.errors.required">Task Name is required</div>
+              </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="parentTaskCheck" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-8">
+          <div class="custom-control custom-checkbox col-sm-4">
+              <input type="checkbox" class="custom-control-input" id="parentTaskCheck" name="parentTaskCheck" (change)="disablefields()">
+              <label class="custom-control-label" for="parentTaskCheck">Parent Task</label>
+          </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="priority" class="col-sm-2 col-form-label">Priority:</label>
+        <div class="col-sm-6">
+        <input type="range" min="0" max="30" class="form-control" [disabled]="isDisabled" id="priority" name="priority" required [(ngModel)]="task.priority" />
+      </div>
+    </div>
+    <div class="form-group row">
+        <label for="parentTask" class="col-sm-2 col-form-label">Parent Task:</label>
+        <div class="col-sm-6">
+          <input type="text" id="parentTask" class="form-control" [disabled]="true" name="parentTask" [(ngModel)]="task.parentTask"/>
+        </div>
+
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#taskModal">Search</button>
+            <!-- Modal -->
+              <div id="taskModal" class="modal fade" role="dialog" tabindex="-1">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Tasks</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <input type="text" placeholder="Search" class="form-control" id="taskSearch" name="taskSearch" [(ngModel)]="taskSearch"/>
+                            <br/>
+                            <ul class="list-group" *ngFor="let task of taskItems | taskfilter: { taskName: taskSearch}">
+                                <button type="button" class="list-group-item" data-dismiss="modal" (click)="setTask(task.taskName)">{{task.taskName}}</button>
+                            </ul>
+                        </div>
+                      </div>
+                
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+          
+          </div>
+
+    </div>
+    <div class="form-group row">
+        <label for="startDate" class="col-sm-2 col-form-label">Start Date:</label>
+        <div class="col-sm-2">
+            <input type="date" id="startDate" class="form-control" [disabled]="isDisabled" name="startDate" placeholder='' required [(ngModel)]="task.startDate"/>
+          </div>
+          <label for="endDate" class="col-sm-2 col-form-label">End Date:</label>
+          <div class="col-sm-2">
+            <input type="date" id="endDate" class="form-control" [disabled]="isDisabled" name="endDate" required [(ngModel)]="task.endDate"/>
+          </div>
+    </div>
+   
+    <div class="form-group row">
+      <label for="firstName" class="col-sm-2 col-form-label">User :</label>
+      <div class="col-sm-6">
+        <input type="text" id="userName" class="form-control" [disabled]="true" name="userName" [(ngModel)]="task.userName"/>
+      </div>
+      <div class="col-sm-2">
+          <button type="button" class="btn btn-light" data-toggle="modal" data-target="#userModal">Search</button>
+          <!-- Modal -->
+            <div id="userModal" class="modal fade" role="dialog" tabindex="-1">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Users</h4>
+                  </div>
+                  <div class="modal-body">
+                      <div>
+                          <input type="text" placeholder="Search" class="form-control" id="userSearch" name="userSearch" [(ngModel)]="userSearch"/>
+                          <br/>
+                          <ul class="list-group" *ngFor="let user of userItems | userfilter: { firstName: userSearch}">
+                              <button type="button" class="list-group-item" data-dismiss="modal" (click)="setUser(user.firstName)">{{user.firstName}}</button>
+                          </ul>
+                      </div>
+                    </div>
+              
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        
+        </div>
+  </div>
+    
+      <div class="col-sm-4" style="text-align: center">
+        <button type = "submit" class="btn btn-success" (click)="updateTask(task)">Update</button>
+      </div>
+        <div class="col-sm-4">  
+          <button type = "reset" class="btn btn-light">Reset</button>
+        </div>
+
+  </form>
+  </div>
+  

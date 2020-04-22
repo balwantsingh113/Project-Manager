@@ -1,0 +1,91 @@
+
+<div class="col-sm-8">
+      <form class="form-horizontal" name="form" (ngSubmit)="userForm.form.valid && userForm.reset()" #userForm="ngForm" novalidate>
+    <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">First Name:</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }" required />
+              <div *ngIf="userForm.submitted && firstName.invalid" class="invalid-feedback">
+                  <div class="text-danger" *ngIf="firstName.errors.required">First Name is required</div>
+              </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="lastName" class="col-sm-2 col-form-label">Last Name:</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }" required />
+              <div *ngIf="userForm.submitted && lastName.invalid" class="invalid-feedback">
+                  <div class="text-danger" *ngIf="lastName.errors.required">Last Name is required</div>
+              </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="employeeId" class="col-sm-2 col-form-label">Employee ID:</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="employeeId" [(ngModel)]="user.employeeId" #employeeId="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && employeeId.invalid }" required />
+              <div *ngIf="userForm.submitted && employeeId.invalid" class="invalid-feedback">
+                  <div class="text-danger" *ngIf="employeeId.errors.required">Employee Id is required</div>
+              </div>
+        </div>
+    </div>
+    
+    <div class="col-sm-8">
+      <div *ngIf="update; else elseBlock" class="col-sm-6" style="text-align: center">
+              <button type = "button" class="btn btn-success" (click)="updateUser(user)">Update</button>
+      </div>
+      <ng-template #elseBlock>
+      <div class="col-sm-6" style="text-align: center">
+            <button type = "submit" class="btn btn-success" (click)="addUser(user)">Add</button>
+        </div>
+      </ng-template>
+        <div class="col-sm-2">  
+          <button type = "reset" class="btn btn-light">Reset</button>
+        </div>
+      </div>
+  </form>
+  </div>
+  <div class="col-sm-8">
+      <hr/>
+      <div style="margin-top: 20px;">
+          <div class="col-sm-3">
+            <input type="text" placeholder="Search" class="form-control" id="search" name="search" [(ngModel)]="search"/>
+          </div>
+            <div class="col-sm-1">
+                <label class="col-form-label">Sort:</label>
+            </div>
+            <div class="col-sm-2">
+                <button type = "reset" class="btn btn-light">First Name</button>
+            </div>
+            <div class="col-sm-2">
+                <button type = "reset" class="btn btn-light">Last Name</button>
+            </div>
+            <div class="col-sm-2">
+                <button type = "reset" class="btn btn-light">Id</button>
+            </div>
+          </div>
+
+          <div class="row">
+            </div>
+            <div style="margin-top: 20px;">
+                <ul class="list-group" *ngFor = "let user of userItems | userfilter: { firstName: search}">
+                    <div class="col-sm-8">
+                      <li class="nav-item list-group-item" style="list-style-type:none;">
+                            <p style="background-color: #eee">{{user.firstName}}</p>
+                            <p style="background-color: #eee">{{user.lastName}} </p>
+                            <p style="background-color: #eee">{{user.employeeId}}</p> 
+                      </li>
+                     </div>
+                  
+                  <div class="col-sm-2">
+                    <li class="nav-item list-group-item" style="list-style-type:none;">
+                          <p><button type = "button" class="btn btn-light" (click)="enableUpdate(user)">Edit</button></p>
+                          <p><button type = "button" class="btn btn-light" (click)="deleteUser(user)">Delete</button></p>
+                    </li>
+                  </div>
+                </ul>
+            </div>
+  
+  </div>
+ 
+
+  
