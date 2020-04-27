@@ -5,7 +5,7 @@
         <label for="firstName" class="col-sm-2 col-form-label">First Name:</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }" required />
-              <div *ngIf="userForm.submitted && firstName.invalid" class="invalid-feedback">
+              <div *ngIf="userForm.submitted && firstName.invalid && (firstName.dirty || firstName.touched)" class="invalid-feedback">
                   <div class="text-danger" *ngIf="firstName.errors.required">First Name is required</div>
               </div>
         </div>
@@ -14,7 +14,7 @@
         <label for="lastName" class="col-sm-2 col-form-label">Last Name:</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }" required />
-              <div *ngIf="userForm.submitted && lastName.invalid" class="invalid-feedback">
+              <div *ngIf="userForm.submitted && lastName.invalid && (lastName.dirty || lastName.touched)" class="invalid-feedback">
                   <div class="text-danger" *ngIf="lastName.errors.required">Last Name is required</div>
               </div>
         </div>
@@ -22,8 +22,9 @@
     <div class="form-group row">
         <label for="employeeId" class="col-sm-2 col-form-label">Employee ID:</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" name="employeeId" [(ngModel)]="user.employeeId" #employeeId="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && employeeId.invalid }" required />
-              <div *ngIf="userForm.submitted && employeeId.invalid" class="invalid-feedback">
+          <input type="number" class="form-control" name="employeeId" [(ngModel)]="user.employeeId" #employeeId="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && employeeId.invalid }" required />
+              <div *ngIf="userForm.submitted && employeeId.invalid && (firstName.dirty || firstName.touched)" class="invalid-feedback">
+                  <div class="text-danger" *ngIf="employeeId.errors.required">Employee Id is required</div>
                   <div class="text-danger" *ngIf="employeeId.errors.required">Employee Id is required</div>
               </div>
         </div>
@@ -35,7 +36,7 @@
       </div>
       <ng-template #elseBlock>
       <div class="col-sm-6" style="text-align: center">
-            <button type = "submit" class="btn btn-success" (click)="addUser(user)">Add</button>
+            <button type = "submit" class="btn btn-success" (click)="addUser(user)" [disabled]="userForm.invalid">Add</button>
         </div>
       </ng-template>
         <div class="col-sm-2">  
