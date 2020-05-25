@@ -14,7 +14,7 @@ export class ProjectService {
 
   constructor(private http: HttpClient ) { }
 
-  private apiUrl = 'http://localhost:8080/v1';
+  private apiUrl = 'http://localhost:8085/project-service/v1';
 
   private handleError(error: any) {
     console.log(error);

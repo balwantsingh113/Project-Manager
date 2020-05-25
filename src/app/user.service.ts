@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient ) { }
 
-  private apiUrl = 'http://localhost:8080/v1';
+  private apiUrl = 'http://localhost:8085/user-service/v1';
 
   private handleError(error: any) {
     console.log(error);
